@@ -1,3 +1,23 @@
+# meikipop with Pitch Accents
+
+## Alterations
+
+I've added pitch accent look up to the present implementation, as shown below.
+
+![example kyoumi](docs/images/example_kyoumi.png)
+
+## Setup
+
+This fork displays Japanese pitch accent information using Kanjium's pitch accent data.
+
+Download `data/source_files/raw/accents.txt` from [Kanjium](https://github.com/mifunetoshiro/kanjium) and place it in:
+
+```
+%LOCALAPPDATA%\meikipop\accents.txt
+```
+
+<br>
+
 # meikipop - universal japanese ocr popup dictionary
 
 instantly look up japanese words anywhere on your screen. meikipop uses optical character recognition (ocr) to read text from websites, games, scanned manga, or even hard-coded video subtitles, giving you effortless dictionary lookups with the press of a key (or even without)!
@@ -30,16 +50,6 @@ to maintain this focus, there are a few things meikipop is **not**:
 ## installation
 
 there are a few different ways to install and run meikipop. note that when meikipop is started for the first time, a dictionary and ocr models may be downloaded.
-
-### pitch accent data
-
-this fork displays Japanese pitch accent information using Kanjium's pitch accent data.
-
-download `data/source_files/raw/accents.txt` from [Kanjium](https://github.com/mifunetoshiro/kanjium) and place it in:
-
-```
-%LOCALAPPDATA%\meikipop\accents.txt
-```
 
 ### easiest: prepackaged binaries
 
