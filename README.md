@@ -25,11 +25,21 @@ it is heavily inspired by the philosophy of [Nazeka](https://github.com/wareya/n
 to maintain this focus, there are a few things meikipop is **not**:
 
 *   **it is not an srs-mining tool.** meikipop does not include functionality to automatically create flashcards for programs like anki.
-*   **it is not a multi-dictionary tool.** while meikipops lets you import yomitan dictionaries, it is designed to run best with a single, semi-custom jmdict+kanjidic dictionary. 
+*   **it is not a multi-dictionary tool.** while meikipops lets you import yomitan dictionaries, it is designed to run best with a single, semi-custom jmdict+kanjidic dictionary.
 
 ## installation
 
 there are a few different ways to install and run meikipop. note that when meikipop is started for the first time, a dictionary and ocr models may be downloaded.
+
+### pitch accent data
+
+this fork displays Japanese pitch accent information using Kanjium's pitch accent data.
+
+download `data/source_files/raw/accents.txt` from [Kanjium](https://github.com/mifunetoshiro/kanjium) and place it in:
+
+```
+%LOCALAPPDATA%\meikipop\accents.txt
+```
 
 ### easiest: prepackaged binaries
 
@@ -38,7 +48,7 @@ just download, unpack and start the executable binary. no python installation re
 
 ### recommended: install via pypi
 
-if you already have python 3.10+ installed, this is the most flexible option that lets you run directly from source, enables you to edit the program and lets you add your own custom ocr providers. 
+if you already have python 3.10+ installed, this is the most flexible option that lets you run directly from source, enables you to edit the program and lets you add your own custom ocr providers.
 
 ```bash
 #... activate your environment if any
@@ -81,7 +91,7 @@ it is possible to run meikipop on wayland in principle, but depending on your sp
 
 here are some tips and recommendations:
 * consider switching to x11
-* the easiest and most compatible way is trying to run the flatpak distribution of meikipop first, before trying any of the other tips 
+* the easiest and most compatible way is trying to run the flatpak distribution of meikipop first, before trying any of the other tips
 * if the flatpak does not work for you, install via pypi or create an editable install and avoid the linux prebuilt, which only got tested on x11
 * make sure you have xwayland working
 * you may need to install additional python dependencies, depending on your system like `pip install pygobject`
@@ -116,7 +126,7 @@ meikipop's architecture allows you to choose whatever ocr suits your use case be
 - google lens (remote): high accuracy, but requires an internet connection and has higher latency then the local options.
 - chrome screen ai (local): alternative local ocr worth checking out if meikiocr does not fit your use case. requires additional setup ([instructions](https://github.com/rtr46/meikipop/releases/tag/v1.10.0))
 - owocr: owocr lets you choose from even more ocr backends (see below)
-- custom ocr provider: if you are running from source it is very simple to integrate any ocr provider on your own (see below) 
+- custom ocr provider: if you are running from source it is very simple to integrate any ocr provider on your own (see below)
 
 ### ...via owocr provider
 
@@ -161,5 +171,3 @@ meikipop import-yomitan-dict-text dict1.zip dict2.zip
 ## license
 
 meikipop is licensed under the GNU General Public License v3.0. see the `LICENSE` file for the full license text.
-
-
