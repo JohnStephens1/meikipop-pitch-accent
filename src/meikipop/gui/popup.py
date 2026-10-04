@@ -10,7 +10,9 @@ from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QFrame, QApplication
 
 from meikipop.config.config import config, IS_MACOS
 from meikipop.dictionary.lookup import DictionaryEntry, KanjiEntry
+from meikipop.dictionary.pitch_accent import mark_high_morae
 from meikipop.gui.magpie_manager import magpie_manager
+
 
 # macOS-specific imports for focus management
 if IS_MACOS:
@@ -252,16 +254,60 @@ class Popup(QWidget):
                 max_ratio = max(max_ratio, 0.7)
 
                 all_html_parts.append(self._render_kanji_entry(entry))
-                continue
 
             header_text_calc = entry.written_form
-            if entry.reading: header_text_calc += f" [{entry.reading}]"
+
+            pitch_html = ""
+            pitch_text = ""
+
+            if entry.reading:
+                if entry.pitch_accents:
+                    pitch_text = " [" + ", ".join(
+                        str(a) for a in entry.pitch_accents
+                    ) + "]"
+
+                    # For now, visually mark the first listed accent pattern.
+                    marked_reading = mark_high_morae(
+                        entry.reading,
+                        entry.pitch_accents[0],
+                    )
+
+                    pitch_html = (
+                        f' <span style="color:{config.color_highlight_reading}; '
+                        f'font-size:{config.font_size_header - 2}px;">'
+                        f'[{marked_reading}]'
+                        f'</span>'
+                        f' <span style="color:{config.color_foreground}; '
+                        f'font-size:{config.font_size_definitions - 2}px; '
+                        f'opacity:0.8;">'
+                        f'[{", ".join(str(a) for a in entry.pitch_accents)}]'
+                        f'</span>'
+                    )
+                else:
+                    pitch_html = (
+                        f' <span style="color:{config.color_highlight_reading}; '
+                        f'font-size:{config.font_size_header - 2}px;">'
+                        f'[{entry.reading}]'
+                        f'</span>'
+                    )
+
+                header_text_calc += f" [{entry.reading}]{pitch_text}"
+
             header_ratio = len(header_text_calc) / self.header_chars_per_line
             max_ratio = max(max_ratio, header_ratio)
 
+
             # --- HTML construction ---
-            header_html = f'<span style="color: {config.color_highlight_word}; font-size:{config.font_size_header}px;">{entry.written_form}</span>'
-            if entry.reading: header_html += f' <span style="color: {config.color_highlight_reading}; font-size:{config.font_size_header - 2}px;">[{entry.reading}]</span>'
+            header_html = (
+                f'<span style="color: {config.color_highlight_word}; '
+                f'font-size:{config.font_size_header}px;">'
+                f'{entry.written_form}'
+                f'</span>'
+            )
+
+            if entry.reading:
+                header_html += pitch_html
+
             if entry.deconjugation_process and config.show_deconjugation:
                 deconj_str = " ← ".join(p for p in entry.deconjugation_process if p)
                 if deconj_str:
